@@ -50,3 +50,20 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.full_name
+    
+class Assignment(models.Model):
+    title = models.CharField(max_length=100, null=False, blank=False, verbose_name='Assignment Title')
+    start_date= models.DateField(default='N/A',null=False, blank=False, verbose_name='Start Date')
+    due_date = models.DateField(default='N/A',null=False, blank=False, verbose_name='Due Date')
+    question_file= models.FileField(upload_to='assignments/questions',null=True, blank=True, verbose_name='Select Assignment File')
+    remark=models.CharField(max_length=100,null=False, blank=False, verbose_name='Assignment Remark')
+    full_mark=models.FloatField(null=False, blank=False)
+    teacher=models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Uploaded By')
+
+    class Meta:
+        verbose_name = 'Assignment'
+        verbose_name_plural = 'Assignments'
+        ordering = ['-title']
+
+    def __str__(self):
+        return self.title
